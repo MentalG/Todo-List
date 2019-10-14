@@ -1,0 +1,9 @@
+.app-header {
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.app-header h2 {
+    font-size: 20px;
+    color: grey;
+}

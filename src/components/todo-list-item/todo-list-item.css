@@ -1,0 +1,18 @@
+.list-item {
+    display: flex;
+    justify-content: space-between;
+}
+
+.icon {
+    font-size: 24px;
+    color: grey;
+}
+
+.icon:hover {
+    cursor: pointer;
+    color: black;
+}
+
+.icon.fa.fa-trash {
+    margin-right: 10px; 
+}
