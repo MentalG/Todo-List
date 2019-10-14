@@ -6,8 +6,8 @@ import TodoListItem from '../todo-list-item/todo-list-item'
 //css
 import './todo-list.css'
 
-const TodoList = ({ todos }) => {
-
+const TodoList = ({ todos }) => {    
+    
     const elements = todos.map((item) => {
         const {id, ...itemProps} = item;
 
