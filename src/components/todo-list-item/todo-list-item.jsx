@@ -4,20 +4,46 @@ import React, { Component } from 'react'
 import './todo-list-item.css'
 
 export default class TodoListItem extends Component {
-    render () {
-        const {label, important = false} = this.props
 
-        const style = {
-            color: important ? 'steelblue' : 'black',
-            fontWeight: important ? 'bold' : 'normal'
+    state = {
+        done: false,
+        important: false
+    };
+
+    onLableClick = () => {
+        this.setState(({ done }) => {
+            return {
+                done: !done
+            }
+        })
+    }
+
+    onBtcClicked = () => {
+        this.setState(({ important }) => {
+            return {
+                important: !important
+            }
+        })
+    }
+
+    render () {
+        const { label, onTrashClicked } = this.props
+        const { done, important } = this.state
+        let className = 'item';
+
+        if (done) {
+            className = className.concat(' done')
         }
-    
+        if (important) {
+            className = className.concat(' important')
+        }
+
         return (
             <div className='list-item'>
-                <span onClick={() => console.log(this)} style={style}>{label}</span>
+                <span className={className} onClick={() => this.onLableClick()}>{label}</span>
                 <div className='action-buttons'>
-                    <i className="icon fa fa-trash"></i>
-                    <i className="icon fa fa-btc"></i>
+                    <i className="icon fa fa-trash" onClick={() => onTrashClicked()}></i>
+                    <i className="icon fa fa-btc" onClick={() => this.onBtcClicked()}></i>
                 </div>
             </div>
         )

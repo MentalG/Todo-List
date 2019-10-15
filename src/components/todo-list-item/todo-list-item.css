@@ -7,16 +7,46 @@
     cursor: pointer;
 }
 
+.item {
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+}
+
+.done {
+    text-decoration: line-through;
+}
+
+.important {
+    font-weight: bold;
+    color: steelblue;
+}
+
 .icon {
     font-size: 24px;
-    color: grey;
 }
 
 .icon:hover {
     cursor: pointer;
-    color: black;
 }
 
-.icon.fa.fa-trash {
-    margin-right: 10px; 
+.fa.fa-trash {
+    margin-right: 10px;
+    color: rgb(95, 1, 1);
 }
+
+.fa.fa-btc {
+    color: rgb(158, 87, 0);
+}
+
+.fa.fa-trash:hover {
+    margin-right: 10px;
+    color: rgb(195, 4, 4);
+}
+
+.fa.fa-btc:hover {
+    color: darkorange;
+}
+
