@@ -11,13 +11,25 @@ import './app.css'
 
 export default class App extends Component {
 
-    render() {
-        const todoData = [
+    state = {
+        todoData: [
             { label: 'Drink Coffee', id: 1 },
             { label: 'Build App', id: 2 },
-            { label: 'Have a lunch', id: 3 },
+            { label: 'Have a lunch', id: 3 }
         ]
-    
+    }
+
+    deleteItem = (id) => {
+        this.setState(({ todoData }) => {
+            return {
+                todoData : todoData.filter(element => element.id !== id)
+            }
+        })
+    }
+
+    render () {
+        const { todoData } = this.state
+
         return (
             <div className='app'>
                 <AppHeader todo={3} done={1} />
@@ -25,7 +37,7 @@ export default class App extends Component {
                     <SearchPanel />
                     <ItemStatusFilter />
                 </div>
-                <TodoList todos={todoData} onDeleted={(id) => console.log()} />
+                <TodoList todos={todoData} onDeleted={(id) => this.deleteItem(id)} />
             </div>
         )
     }
