@@ -5,7 +5,7 @@ import AppHeader from '../app-header/app-header'
 import SearchPanel from '../search-panel/search-panel'
 import ItemStatusFilter from '../item-status-filter/item-status-filter'
 import TodoList from '../todo-list/todo-list'
-import ItemAddButton from '../item-add-button/item-add-button'
+import ItemAddForm from '../item-add-form/item-add-form'
 
 //css
 import './app.css'
@@ -18,6 +18,10 @@ export default class App extends Component {
         return { label, important: false, done: false, id: this.maxId++ }
     }
 
+    onToggle = (arr , id, property) => {
+        return arr.map((object) => object.id === id ? { ...object, [property]: !object[property] } : object)
+    }
+    
     state = {
         todoData: [
             this.createTodoItem('Drink Coffee'),
@@ -25,12 +29,12 @@ export default class App extends Component {
             this.createTodoItem('Have a lunch')
         ]
     }
+    
 
-
-    addItem = () => {
+    addItem = (label) => {
         this.setState(({ todoData }) => {
             return {
-                todoData: [...todoData].concat(this.createTodoItem())
+                todoData: [...todoData].concat(this.createTodoItem(label))
             }
         })
     }
@@ -46,7 +50,7 @@ export default class App extends Component {
     onToggleImportant = (id) => {
         this.setState(({ todoData }) => {
             return {
-                todoData: todoData.map((object) => object.id === id ? { ...object, important: !object.important } : object)
+                todoData: this.onToggle(todoData, id, 'important')
             }
         })
     }
@@ -54,7 +58,7 @@ export default class App extends Component {
     onToggleDone = (id) => {
         this.setState(({ todoData }) => {
             return {
-                todoData: todoData.map((object) => object.id === id ? { ...object, done: !object.done } : object)
+                todoData: this.onToggle(todoData, id, 'done')
             }
         })
     }
@@ -79,8 +83,8 @@ export default class App extends Component {
                     onToggleImportant={(id) => this.onToggleImportant(id)}
                     onToggleDone={(id) => this.onToggleDone(id)}
                 />
-                <ItemAddButton
-                    onAdd={() => this.addItem()} />
+                <ItemAddForm
+                    onAdd={(label) => this.addItem(label)} />
             </div>
         )
     }
