@@ -1,3 +1,7 @@
+.todo-list {
+    margin-bottom: 10px;
+}
+
 .todo-list .list-group-item {
     padding: .25rem .75rem;
 }

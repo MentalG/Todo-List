@@ -6,14 +6,19 @@ import TodoListItem from '../todo-list-item/todo-list-item'
 //css
 import './todo-list.css'
 
-const TodoList = ({ todos, onDeleted }) => {
+const TodoList = ({ todoData, onDeleted, onToggleImportant, onToggleDone }) => {
+    
+    const elements = todoData.map((item) => {
+        const { id, ...itemProps } = item;  
 
-    const elements = todos.map((item) => {
-        const { id, ...itemProps } = item;        
-
-        return <li key={id} className='list-group-item'>
-            <TodoListItem {...itemProps} onTrashClicked={() => onDeleted(id)} />
-        </li>
+        return (<li key={id} className='list-group-item'>
+            <TodoListItem 
+            {...itemProps}
+             onTrashClicked={() => onDeleted(id)}
+             onToggleImportant={() => onToggleImportant(id)}
+             onToggleDone={() => onToggleDone(id)}
+             />
+        </li>)
     })
 
     return (

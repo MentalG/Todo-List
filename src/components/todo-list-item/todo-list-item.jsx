@@ -4,31 +4,8 @@ import React, { Component } from 'react'
 import './todo-list-item.css'
 
 export default class TodoListItem extends Component {
-
-    state = {
-        done: false,
-        important: false
-    };
-
-    onLableClick = () => {
-        this.setState(({ done }) => {
-            return {
-                done: !done
-            }
-        })
-    }
-
-    onBtcClicked = () => {
-        this.setState(({ important }) => {
-            return {
-                important: !important
-            }
-        })
-    }
-
     render () {
-        const { label, onTrashClicked } = this.props
-        const { done, important } = this.state
+        const { label, onTrashClicked, onToggleImportant, onToggleDone, done, important } = this.props
         let className = 'item';
 
         if (done) {
@@ -40,10 +17,10 @@ export default class TodoListItem extends Component {
 
         return (
             <div className='list-item'>
-                <span className={className} onClick={() => this.onLableClick()}>{label}</span>
+                <span className={className} onClick={() => onToggleDone()}>{label}</span>
                 <div className='action-buttons'>
                     <i className="icon fa fa-trash" onClick={() => onTrashClicked()}></i>
-                    <i className="icon fa fa-btc" onClick={() => this.onBtcClicked()}></i>
+                    <i className="icon fa fa-btc" onClick={() => onToggleImportant()}></i>
                 </div>
             </div>
         )
