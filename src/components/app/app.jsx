@@ -18,18 +18,41 @@ export default class App extends Component {
         return { label, important: false, done: false, id: this.maxId++ }
     }
 
-    onToggle = (arr , id, property) => {
+    onToggle = (arr, id, property) => {
         return arr.map((object) => object.id === id ? { ...object, [property]: !object[property] } : object)
     }
-    
+
+    search = (array, string) => {
+        if (string.length === 0) {
+            return array
+        }
+
+        return array.filter(item => item.label.toLowerCase().indexOf(string.toLowerCase()) !== -1)
+    }
+
+    filter = (items, filter) => {
+        switch (filter) {
+            case 'all': 
+                return items;
+            case 'active':
+                return items.filter((item) => !item.done)
+            case 'done':
+                return items.filter((item) => item.done)
+            default :
+                return items
+        }
+    }
+
     state = {
         todoData: [
             this.createTodoItem('Drink Coffee'),
             this.createTodoItem('Build React App'),
             this.createTodoItem('Have a lunch')
-        ]
+        ],
+        term: '',
+        filter: 'all'
     }
-    
+
 
     addItem = (label) => {
         this.setState(({ todoData }) => {
@@ -63,10 +86,29 @@ export default class App extends Component {
         })
     }
 
+    onSearchEnter = (value) => {
+        this.setState(({ term }) => {
+            return {
+                term: value
+            }
+        })
+    }
+
+    clickHandle = (value) => {
+        this.setState(({ filter }) => {
+            return {
+                filter : value
+            }
+        })
+    }
+
     render () {
-        const { todoData } = this.state
+        const { todoData, term, filter } = this.state
         const doneCount = todoData.filter((element) => element.done).length
         const todoCount = todoData.length - doneCount
+        const visibleItems = this.filter(this.search(todoData, term), filter)
+        console.log(filter);
+        
 
         return (
             <div className='app'>
@@ -74,11 +116,15 @@ export default class App extends Component {
                     todo={todoCount}
                     done={doneCount} />
                 <div className='search-bar'>
-                    <SearchPanel />
-                    <ItemStatusFilter />
+                    <SearchPanel
+                        onSearchEnter={(value) => this.onSearchEnter(value)}
+                    />
+                    <ItemStatusFilter 
+                    clickHandle={(value) => this.clickHandle(value)}
+                    filter={filter} />
                 </div>
                 <TodoList
-                    todoData={todoData}
+                    todoData={visibleItems}
                     onDeleted={(id) => this.deleteItem(id)}
                     onToggleImportant={(id) => this.onToggleImportant(id)}
                     onToggleDone={(id) => this.onToggleDone(id)}

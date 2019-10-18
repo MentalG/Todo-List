@@ -22,7 +22,7 @@ export default class ItemAddForm extends Component {
             this.setState({
                 label: ''
             })
-        }
+        } 
     }
 
     render () {

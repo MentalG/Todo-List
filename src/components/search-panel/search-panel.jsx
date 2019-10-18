@@ -3,9 +3,12 @@ import React from 'react'
 //css
 import './search-panel.css'
 
-const SearchPanel = () => {
+const SearchPanel = ({ onSearchEnter }) => {
     return (
-        <input className='search-input form-control' placeholder='search' />
+        <input
+            onChange={(e) => onSearchEnter(e.target.value)}
+            className='search-input form-control'
+            placeholder='search' />
     )
 }
 
